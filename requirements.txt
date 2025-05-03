@@ -3,13 +3,14 @@ pandas
 numpy
 pymongo
 certifi
-pymongo[srv]
+pymongo[srv]==3.6
 scikit-learn
 mlflow
 pyaml
 dagshub
 fastapi
 uvicorn
+aws 
 
 
 ##-e .
