@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/93db1af8fa7e48b0997fd8e4bb8fe718/artifacts
+end_time: 1746302805404
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 93db1af8fa7e48b0997fd8e4bb8fe718
+run_name: welcoming-bee-463
+run_uuid: 93db1af8fa7e48b0997fd8e4bb8fe718
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746302775612
+status: 4
+tags: []
+user_id: shrey
