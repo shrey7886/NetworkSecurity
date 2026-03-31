@@ -63,7 +63,7 @@ MongoDB  →  Data Ingestion  →  Data Validation  →  Data Transformation
 
 | Layer | Technology |
 |---|---|
-| Data storage | MongoDB Atlas |
+| Data storage | Local CSV file (`Network_Data/phisingData.csv`) |
 | ML framework | scikit-learn (KNNImputer, GridSearchCV, Random Forest, GBM, AdaBoost, Decision Tree, Logistic Regression) |
 | Experiment tracking | MLflow + DagsHub |
 | API | FastAPI + Uvicorn |
@@ -125,8 +125,7 @@ NetworkSecurity/
 ## Pipeline Stages
 
 ### 1 · Data Ingestion
-- Connects to **MongoDB Atlas** using `MONGO_DB_URL`.
-- Reads the `NetworkData` collection from the `SHREYG` database into a DataFrame.
+- Reads the raw dataset directly from **`Network_Data/phisingData.csv`** on disk — no database connection required.
 - Replaces `"na"` strings with `NaN`.
 - Saves the raw dataset to `Artifacts/<timestamp>/data_ingestion/feature_store/phisingData.csv`.
 - Splits 80/20 into train/test and saves to `Artifacts/<timestamp>/data_ingestion/ingested/`.
@@ -290,7 +289,6 @@ mlruns/
 ### Prerequisites
 
 - Python 3.10+
-- MongoDB Atlas URI
 - AWS credentials (for S3 sync and deployment)
 
 ### Steps
@@ -311,10 +309,7 @@ pip install -e .
 
 # 4. Create a .env file (see Environment Variables section)
 
-# 5. (Optional) Push your dataset to MongoDB
-python push_data.py
-
-# 6. Run the training pipeline
+# 5. Run the training pipeline
 python main.py
 
 # 7. Start the API server
@@ -331,11 +326,12 @@ streamlit run streamlit_app.py
 Create a `.env` file in the project root:
 
 ```env
-MONGO_DB_URL=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/
 AWS_ACCESS_KEY_ID=<your-key>
 AWS_SECRET_ACCESS_KEY=<your-secret>
 AWS_REGION=<your-region>
 ```
+
+> No database credentials needed — data is read directly from `Network_Data/phisingData.csv`.
 
 ---
 
@@ -347,7 +343,6 @@ docker build -t networksecurity:latest .
 
 # Run
 docker run -d -p 8080:8080 \
-  -e MONGO_DB_URL=<your-uri> \
   -e AWS_ACCESS_KEY_ID=<key> \
   -e AWS_SECRET_ACCESS_KEY=<secret> \
   -e AWS_REGION=<region> \
@@ -375,7 +370,6 @@ The workflow at `.github/workflows/main.yml` has three jobs that run on every pu
 | `AWS_REGION` | e.g. `us-east-1` |
 | `ECR_REPOSITORY_NAME` | ECR repository name |
 | `AWS_ECR_LOGIN_URI` | ECR registry URI (e.g. `<account>.dkr.ecr.<region>.amazonaws.com`) |
-| `MONGO_DB_URL` | MongoDB Atlas connection string (passed to the running container) |
 
 ---
 
