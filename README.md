@@ -375,6 +375,7 @@ The workflow at `.github/workflows/main.yml` has three jobs that run on every pu
 | `AWS_REGION` | e.g. `us-east-1` |
 | `ECR_REPOSITORY_NAME` | ECR repository name |
 | `AWS_ECR_LOGIN_URI` | ECR registry URI (e.g. `<account>.dkr.ecr.<region>.amazonaws.com`) |
+| `MONGO_DB_URL` | MongoDB Atlas connection string (passed to the running container) |
 
 ---
 
