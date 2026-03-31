@@ -86,4 +86,4 @@ class DataIngestion:
             return dataingestionartifact
 
         except Exception as e:
-            raise NetworkSecurityException
+            raise NetworkSecurityException(e, sys)
